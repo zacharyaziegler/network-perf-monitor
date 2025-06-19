@@ -1,0 +1,19 @@
+# Java build output
+**/target/
+**/*.class
+
+# VS Code workspace settings
+.vscode/
+
+# OS cruft
+.DS_Store
+
+# Maven wrapper logs
+.mvn/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+env/
