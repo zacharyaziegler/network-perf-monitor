@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    # point at TimescaleDB
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+# placeholder cron schedule for ping runner service
+app:
+  ping:
+    cron: "0 0/5 * * * *"   
