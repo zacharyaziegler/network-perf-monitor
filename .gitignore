@@ -16,4 +16,4 @@
 .classpath
 .project
 
-env/
+.env
