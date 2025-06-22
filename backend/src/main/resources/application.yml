@@ -8,12 +8,18 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  security:
+    user:
+      name: ${API_USER:admin}
+      password: ${API_PASSWORD:admin}
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info
+
+
 
 # placeholder cron schedule for ping runner service
 app:
