@@ -68,5 +68,35 @@ public class TestRunControllerTests {
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].latencyMs", is(10.0)))
             .andExpect(jsonPath("$[0].downloadMbps", is(50.0)));
-        }       
+    }
+        
+    @Test
+    void getAllRuns_withoutAuth_returns401() throws Exception {
+        mockMvc.perform(get("/api/tests"))
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getAllRuns_withBadAuth_returns401() throws Exception {
+        mockMvc.perform(get("/api/tests")
+            .with(httpBasic("bad", "creds")))
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getAllRuns_emptyDb_returnsEmptyArray() throws Exception {
+        repo.deleteAll();
+        mockMvc.perform(get("/api/tests")
+            .with(httpBasic("admin", "admin")))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    void healthEndpoint_isUpAndUnauthenticated() throws Exception {
+        mockMvc.perform(get("/actuator/health"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.status", is("UP")));
+    }
+
 }
