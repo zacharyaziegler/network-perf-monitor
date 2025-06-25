@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -53,5 +54,18 @@ public class TestRunRepositoryTests {
         TestRun fetched = all.get(0);
         assertThat(fetched.getLatencyMs()).isEqualTo(12.3);
         assertThat(fetched.getDownloadMbps()).isEqualTo(100.0);
+    }
+
+    @Test
+    void save_nullTimestamp_throwsException() {
+        TestRun bad = new TestRun();
+        bad.setTimestamp(null);
+        bad.setLatencyMs(1.0);
+        bad.setPacketLossPct(0.0);
+        bad.setDownloadMbps(1.0);
+        bad.setUploadMbps(1.0);
+
+        assertThatThrownBy(() -> repository.saveAndFlush(bad))
+            .isInstanceOf(DataIntegrityViolationException.class);
     }
 }
