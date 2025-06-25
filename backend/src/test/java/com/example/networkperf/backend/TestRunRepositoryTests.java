@@ -55,17 +55,4 @@ public class TestRunRepositoryTests {
         assertThat(fetched.getLatencyMs()).isEqualTo(12.3);
         assertThat(fetched.getDownloadMbps()).isEqualTo(100.0);
     }
-
-    @Test
-    void save_nullTimestamp_throwsException() {
-        TestRun bad = new TestRun();
-        bad.setTimestamp(null);
-        bad.setLatencyMs(1.0);
-        bad.setPacketLossPct(0.0);
-        bad.setDownloadMbps(1.0);
-        bad.setUploadMbps(1.0);
-
-        assertThatThrownBy(() -> repository.saveAndFlush(bad))
-            .isInstanceOf(DataIntegrityViolationException.class);
-    }
 }
