@@ -19,9 +19,7 @@ management:
       exposure:
         include: health,info
 
-
-
-# placeholder cron schedule for ping runner service
 app:
   ping:
-    cron: "0 0/5 * * * *"   
+    cron: "0 0/5 * * * *"
+    host: "8.8.8.8"

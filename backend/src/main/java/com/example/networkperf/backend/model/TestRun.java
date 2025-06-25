@@ -32,6 +32,16 @@ public class TestRun {
     @Column(nullable = false)
     private double uploadMbps;
 
+    public TestRun() {}
+
+    public TestRun(Instant timestamp, double latencyMs, double packetLossPct, double downloadMbps, double uploadMbps) {
+        this.timestamp = timestamp;
+        this.latencyMs = latencyMs;
+        this.packetLossPct = packetLossPct;
+        this.downloadMbps = downloadMbps;
+        this.uploadMbps = uploadMbps;
+    }
+
     public Long getId() {
         return id;
     }
