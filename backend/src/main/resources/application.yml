@@ -1,8 +1,10 @@
 spring:
+  config:
+    import: optional:dotenv
   datasource:
     # point at TimescaleDB
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB}
-    username: ${POSTGRES_USER:postgres}
+    username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
@@ -21,5 +23,5 @@ management:
 
 app:
   ping:
-    cron: "0 0/5 * * * *"
+    cron: "*/10 * * * * *"
     host: "8.8.8.8"
